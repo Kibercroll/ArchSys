@@ -1,0 +1,33 @@
+blkdiscard -f /dev/sda
+reboot
+timedatectl set-ntp true
+cfdisk /dev/sda
+mkfs.ext4 -L ArchSys /dev/sda2
+mount /dev/sda2 /mnt
+pacstrap /mnt base base-devel linux linux-firmware sudo nano dhcpcd
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+ln -sf /usr/share/zoneinfo/Europe/Samara /etc/localtime
+hwclock --systohc
+nano /etc/locale.gen #en_US.UTF-8 ru_RU.UTF-8
+locale-gen
+echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf
+echo "KEYMAP=ru" >> /etc/vconsole.conf
+echo "FONT=cyr-sun16" >> /etc/vconsole.conf
+echo "mikepc" >> /etc/hostname
+echo "127.0.0.1	localhost" >> /etc/hosts
+echo "::1	localhost" >> /etc/hosts
+echo "127.0.1.1	mikepc.localdomain mikepc" >> /etc/hosts
+mkinitcpio -p linux
+passwd
+useradd -m -g users -G wheel -s /bin/bash mike
+passwd mike
+pacman -S intel-ucode
+pacman -S grub
+grub-install /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+nano /etc/sudoers
+pacman -Syu
+exit
+umount -R /mnt
+reboot

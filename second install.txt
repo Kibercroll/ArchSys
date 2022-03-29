@@ -1,0 +1,25 @@
+sudo pacman -S xorg-server xorg-xinit
+sudo pacman -S feh
+sudo pacman -S dmenu
+sudo pacman -S xmonad xmobar xmonad-contrib
+sudo pacman -S pulseaudio pulseaudio-alsa alsa-utils
+sudo pacman -S xclip
+sudo pacman -S scrot
+
+git clone https://aur.archlinux.org/nvidia-390xx.git
+cd nvidia-390xx
+makepkg -fsri
+
+git clone https://aur.archlinux.org/nvidia-390xx-utils.git
+cd nvidia-390xx-utils
+makepkg -fsri
+
+git clone https://aur.archlinux.org/nvidia-390xx-settings.git
+cd nvidia-390xx-settings
+makepkg -fsri
+
+chmod +x configs_move.sh
+./configs_move.sh
+cmod +x ~/.config/scrot_screen.sh
+
+xmonad --recompile && xmonad --restart
