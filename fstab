@@ -1,0 +1,7 @@
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+# /dev/sda2 LABEL=System
+UUID=	/         	ext4      	async,nodev,suid,noatime		        0 1
+UUID=	/ssd	    	ext4		    async,nodev,suid,noatime,users	 	  0 2
